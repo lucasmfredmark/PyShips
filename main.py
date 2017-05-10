@@ -1,7 +1,7 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 import tkinter
-#import game
+import classes.BattleshipsGame
 
 class Application(tkinter.Frame):
     def __init__(self, parent):
@@ -45,23 +45,6 @@ class Application(tkinter.Frame):
 
         c1.pack(side='left', padx=(10, 5))
         c2.pack(side='right', padx=(5, 10))
-
-
-
-        #for row in range(10):
-            #for column in range(10):
-                #button = tkinter.Button(self.parent, width=1, height=1, relief=tkinter.FLAT)
-                #button.configure(text='O')
-                #button.configure(command=clickButton(row, column))
-                #button.grid(row=row, column=column)
-
-        #canvas = tkinter.Canvas(self)
-        #for row in range(10):
-        #    for column in range(10):
-        #        canvas.create_rectangle(row * 0, column * 0, row * 30, column * 30, width=1)
-        #canvas.create_rectangle(150, 10, 240, 80, outline="#f50", fill="#f50")
-        #canvas.create_rectangle(270, 10, 370, 80, outline="#05f", fill="#05f")
-        #canvas.pack()
 
 def main():
     root = tkinter.Tk()
