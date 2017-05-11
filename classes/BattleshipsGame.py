@@ -1,6 +1,6 @@
 import copy
 
-class Game:
+class BattleshipsGame:
     def __init__(self):
         self.BOARD_SIZE = 10
         self.SHIPS = {
