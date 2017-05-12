@@ -1,4 +1,5 @@
 import copy
+import random
 
 class BattleshipsGame:
     def __init__(self):
@@ -11,7 +12,7 @@ class BattleshipsGame:
             'Destroyer': 2
         }
         self.player_board = {
-            'board': [0] * self.BOARD_SIZE,
+            'board': [[0 for i in range(self.BOARD_SIZE)] for j in range(self.BOARD_SIZE)],
             'ships': self.SHIPS
         }
         self.computer_board = copy.deepcopy(self.player_board)
@@ -19,13 +20,13 @@ class BattleshipsGame:
     def reset_game(self):
         self.__init__()
 
-    def place_ship(self, board, ship_length, is_vertical, position_x, position_y):
+    def place_ship(self, board, ship_length, ship_char, is_vertical, position_x, position_y):
         if is_vertical:
             for i in range(ship_length):
-                board[position_x + i][position_y] = ship_length
+                board[position_x + i][position_y] = ship_char
         else:
             for i in range(ship_length):
-                board[position_x][position_y + i] = ship_length
+                board[position_x][position_y + i] = ship_char
 
         return board
 
@@ -50,3 +51,17 @@ class BattleshipsGame:
 
     def validate_position(self, position_x, position_y):
         return 0 <= position_x < self.BOARD_SIZE and 0 <= position_y < self.BOARD_SIZE
+
+    def computer_place_ships(self, board, ships):
+        for ship in ships.keys():
+            valid_placement = False
+
+            while not valid_placement:
+                is_vertical = bool(random.getrandbits(1))
+                position_x = random.randint(0, self.BOARD_SIZE) - 1
+                position_y = random.randint(0, self.BOARD_SIZE) - 1
+                valid_placement = self.validate_ship_placement(board, ships[ship], is_vertical, position_x, position_y)
+
+            board = self.place_ship(board, ships[ship], ship[0], is_vertical, position_x, position_y)
+
+        return board

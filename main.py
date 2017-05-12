@@ -13,7 +13,7 @@ class Application(tkinter.Frame):
     def initUI(self):
         # constants
         BOARD_SIZE = 350
-        TILE_COUNT = 10
+        TILE_COUNT = self.game.BOARD_SIZE
         TILE_BORDER = 1
         TILE_SIZE = (BOARD_SIZE / TILE_COUNT) - (TILE_BORDER / TILE_COUNT)
 
