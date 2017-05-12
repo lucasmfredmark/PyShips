@@ -11,7 +11,7 @@ class BattleshipsGame:
             'Destroyer': 2
         }
         self.player_board = {
-            'board': [0] * self.BOARD_SIZE,
+            'board': [[0 for i in range(self.BOARD_SIZE)] for j in range(self.BOARD_SIZE)],
             'ships': self.SHIPS
         }
         self.computer_board = copy.deepcopy(self.player_board)
