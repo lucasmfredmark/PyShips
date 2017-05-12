@@ -37,7 +37,14 @@ class BattleshipsGame:
         elif not is_vertical and ship_length + position_y >= self.BOARD_SIZE:
             return False
         else:
-            pass
+            if is_vertical:
+                for i in range(ship_length):
+                    if board[position_x + i][position_y] != -1:
+                        return False
+            else:
+                for i in range(ship_length):
+                    if board[position_x][position_y + i] != -1:
+                        return False
 
         return True
 

@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 
 import tkinter
-import classes.BattleshipsGame
+from classes.BattleshipsGame import BattleshipsGame
 
 class Application(tkinter.Frame):
     def __init__(self, parent):
         tkinter.Frame.__init__(self, parent)
         self.parent = parent
+        self.game = BattleshipsGame()
         self.initUI()
 
     def initUI(self):
@@ -20,12 +21,6 @@ class Application(tkinter.Frame):
         def click_tile(event):
             print(event.widget.find_closest(event.x, event.y)[0])
 
-        def make_grid(grid):
-            for x in range(TILE_COUNT):
-                for y in range(TILE_COUNT):
-                    rect = grid.create_rectangle(TILE_SIZE * x, TILE_SIZE * y, (TILE_SIZE * x) + TILE_SIZE, (TILE_SIZE * y) + TILE_SIZE, width=1, fill='#ddd', activefill='#eee')
-                    grid.tag_bind(rect, '<ButtonPress-1>', click_tile)
-
         # gui stuff
         self.parent.resizable(False, False)
         self.parent.title('Battleships Game')
@@ -36,8 +31,12 @@ class Application(tkinter.Frame):
         #label = tkinter.Label(self.parent, text='Start new game', font=('Helvetica', 20), pady=10)
 
         # generate grids for both canvases
-        make_grid(canvas_1)
-        make_grid(canvas_2)
+        for x in range(TILE_COUNT):
+            for y in range(TILE_COUNT):
+                c1_rect = canvas_1.create_rectangle(TILE_SIZE * x, TILE_SIZE * y, (TILE_SIZE * x) + TILE_SIZE, (TILE_SIZE * y) + TILE_SIZE, width=1, fill='#ddd', activefill='#eee')
+                c2_rect = canvas_2.create_rectangle(TILE_SIZE * x, TILE_SIZE * y, (TILE_SIZE * x) + TILE_SIZE, (TILE_SIZE * y) + TILE_SIZE, width=1, fill='#ddd', activefill='#eee')
+                canvas_1.tag_bind(c1_rect, '<ButtonPress-1>', click_tile)
+                canvas_2.tag_bind(c2_rect, '<ButtonPress-1>', click_tile)
 
         status_label.pack()
         #label.pack(side='bottom')
