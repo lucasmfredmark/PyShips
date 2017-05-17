@@ -1,21 +1,17 @@
-import copy
 import random
 
 class BattleshipsGame:
-    def __init__(self):
+    def __init__(self, player):
         self.BOARD_SIZE = 10
-        self.SHIPS = {
+        self.ships = {
             'Aircraft Carrier': 5,
             'Battleship': 4,
             'Cruiser': 3,
             'Submarine': 3,
             'Destroyer': 2
         }
-        self.player_board = {
-            'board': [[0 for i in range(self.BOARD_SIZE)] for j in range(self.BOARD_SIZE)],
-            'ships': self.SHIPS
-        }
-        self.computer_board = copy.deepcopy(self.player_board)
+        self.board = [[0 for i in range(self.BOARD_SIZE)] for j in range(self.BOARD_SIZE)]
+        self.player = player
 
     def reset_game(self):
         self.__init__()
@@ -52,7 +48,7 @@ class BattleshipsGame:
     def validate_position(self, position_x, position_y):
         return 0 <= position_x < self.BOARD_SIZE and 0 <= position_y < self.BOARD_SIZE
 
-    def computer_place_ships(self, board, ships):
+    def place_ships(self, board, ships):
         for ship in ships.keys():
             valid_placement = False
 
@@ -65,3 +61,16 @@ class BattleshipsGame:
             board = self.place_ship(board, ships[ship], ship[0], is_vertical, position_x, position_y)
 
         return board
+
+    def make_move(self, board, position_x, position_y):
+        if board[position_x][position_y] == -1:
+            return 'miss'
+        else:
+            return 'hit'
+
+    def game_loop(self):
+        self.place_ships(self.board, self.ships)
+
+        for i in range(self.BOARD_SIZE * self.BOARD_SIZE):
+            fire_position = self.player.get_fire_position()
+            print(fire_position)
