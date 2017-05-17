@@ -10,7 +10,7 @@ class BattleshipsGame:
             'Submarine': 3,
             'Destroyer': 2
         }
-        self.board = [[0 for i in range(self.BOARD_SIZE)] for j in range(self.BOARD_SIZE)]
+        self.board = [[-1 for i in range(self.BOARD_SIZE)] for j in range(self.BOARD_SIZE)]
         self.player = player
 
     def reset_game(self):
@@ -54,8 +54,8 @@ class BattleshipsGame:
 
             while not valid_placement:
                 is_vertical = bool(random.getrandbits(1))
-                position_x = random.randint(0, self.BOARD_SIZE) - 1
-                position_y = random.randint(0, self.BOARD_SIZE) - 1
+                position_x = random.randint(1, self.BOARD_SIZE) - 1
+                position_y = random.randint(1, self.BOARD_SIZE) - 1
                 valid_placement = self.validate_ship_placement(board, ships[ship], is_vertical, position_x, position_y)
 
             board = self.place_ship(board, ships[ship], ship[0], is_vertical, position_x, position_y)

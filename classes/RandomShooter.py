@@ -1,4 +1,4 @@
-from . import BattleshipsAI
+from .BattleshipsAI import BattleshipsAI
 import random
 
 class RandomShooter(BattleshipsAI):
@@ -11,5 +11,5 @@ class RandomShooter(BattleshipsAI):
 
         return position_x, position_y
 
-    def hit_feedback(self, hit):
-        return True
+    #def hit_feedback(self, hit):
+        #return True
