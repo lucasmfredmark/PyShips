@@ -87,7 +87,21 @@ class BattleshipsGame:
     def print_board(self, board):
         for x in range(self.BOARD_SIZE):
             for y in range(self.BOARD_SIZE):
-                print(board[x][y], end='')
+                # position was shot at
+                if board[x][y] == '@':
+                    print('\x1b[6;30;42m' + " " + '\x1b[0m' + " ", end='')
+                
+                # shot was a miss
+                if board[x][y] == '!':
+                    print('\x1b[0;30;41m' + " " + '\x1b[0m' + " ", end='')
+                
+                # default
+                if board[x][y] == '#':
+                    print('\x1b[0;30;40m' + " " + '\x1b[0m' + " ", end='')
+                
+                # ship
+                if board[x][y] in ['A', 'B', 'C', 'D', 'S']:
+                    print('\x1b[0;34;47m' + board[x][y] + '\x1b[0m' + " ", end='')
             print()
 
     def play_game(self):
