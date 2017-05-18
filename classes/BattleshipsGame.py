@@ -1,20 +1,15 @@
+from . import BattleshipsGameSettings
 import random
 
 class BattleshipsGame:
     def __init__(self, player):
-        self.BOARD_SIZE = 10
-        self.ships = {
-            'Aircraft Carrier': 5,
-            'Battleship': 4,
-            'Cruiser': 3,
-            'Submarine': 3,
-            'Destroyer': 2
-        }
-        self.board = [[-1 for i in range(self.BOARD_SIZE)] for j in range(self.BOARD_SIZE)]
+        self.BOARD_SIZE = BattleshipsGameSettings.BOARD_SIZE
+        self.ships = BattleshipsGameSettings.SHIPS
+        self.board = [['#' for y in range(self.BOARD_SIZE)] for x in range(self.BOARD_SIZE)]
         self.player = player
 
     def reset_game(self):
-        self.__init__()
+        self.__init__(self.player)
 
     def place_ship(self, board, ship_length, ship_char, is_vertical, position_x, position_y):
         if is_vertical:
@@ -36,11 +31,11 @@ class BattleshipsGame:
         else:
             if is_vertical:
                 for i in range(ship_length):
-                    if board[position_x + i][position_y] != -1:
+                    if board[position_x + i][position_y] != '#':
                         return False
             else:
                 for i in range(ship_length):
-                    if board[position_x][position_y + i] != -1:
+                    if board[position_x][position_y + i] != '#':
                         return False
 
         return True
@@ -54,8 +49,8 @@ class BattleshipsGame:
 
             while not valid_placement:
                 is_vertical = bool(random.getrandbits(1))
-                position_x = random.randint(1, self.BOARD_SIZE) - 1
-                position_y = random.randint(1, self.BOARD_SIZE) - 1
+                position_x = random.randint(0, self.BOARD_SIZE - 1)
+                position_y = random.randint(0, self.BOARD_SIZE - 1)
                 valid_placement = self.validate_ship_placement(board, ships[ship], is_vertical, position_x, position_y)
 
             board = self.place_ship(board, ships[ship], ship[0], is_vertical, position_x, position_y)
@@ -63,14 +58,59 @@ class BattleshipsGame:
         return board
 
     def make_move(self, board, position_x, position_y):
-        if board[position_x][position_y] == -1:
-            return 'miss'
+        if board[position_x][position_y] == '#' or board[position_x][position_y] == '!':
+            return False
         else:
-            return 'hit'
+            return True
 
-    def game_loop(self):
+    def check_sink(self, board, position_x, position_y):
+        for ship in self.ships.keys():
+            if board[position_x][position_y] == ship[0]:
+                ship_name = ship
+                break
+
+        self.ships[ship_name] -= 1
+
+        if self.ships[ship_name] == 0:
+            print(ship_name + ' sunk')
+            return True
+        else:
+            return False
+
+    def check_win(self):
+        for ship in self.ships:
+            if ship != 0:
+                return False
+
+        return True
+
+    def print_board(self, board):
+        for x in range(self.BOARD_SIZE):
+            for y in range(self.BOARD_SIZE):
+                print(board[x][y], end='')
+            print()
+
+    def play_game(self):
         self.place_ships(self.board, self.ships)
+        self.print_board(self.board)
+
+        hasWon = False
 
         for i in range(self.BOARD_SIZE * self.BOARD_SIZE):
-            fire_position = self.player.get_fire_position()
-            print(fire_position)
+            position_x, position_y = self.player.get_shot_position()
+
+            if self.make_move(self.board, position_x, position_y):
+                if self.board[position_x][position_y] != '@':
+                    if self.check_sink(self.board, position_x, position_y):
+                        self.board[position_x][position_y] = '@'
+
+                        if self.check_win():
+                            hasWon = True
+                            break
+                    else:
+                        self.board[position_x][position_y] = '@'
+            else:
+                self.board[position_x][position_y] = '!'
+
+        self.print_board(self.board)
+        print('hasWon: {}'.format(hasWon))
