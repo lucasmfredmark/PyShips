@@ -3,7 +3,7 @@ from .. import BattleshipsGameSettings
 class BattleshipsAI:
     def __init__(self):
         self.BOARD_SIZE = BattleshipsGameSettings.BOARD_SIZE
-        self.ships = BattleshipsGameSettings.SHIPS
+        self.SHIPS = BattleshipsGameSettings.SHIPS
 
     def get_shot_position(self, ships):
         raise NotImplementedError

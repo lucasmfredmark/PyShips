@@ -8,9 +8,6 @@ class BattleshipsGame:
         self.board = [['#' for y in range(self.BOARD_SIZE)] for x in range(self.BOARD_SIZE)]
         self.player = player
 
-    def reset_game(self):
-        self.__init__(self.player)
-
     def place_ship(self, ship_length, ship_char, is_vertical, position_x, position_y):
         if is_vertical:
             for i in range(ship_length):
@@ -78,7 +75,7 @@ class BattleshipsGame:
         self.ships[ship_name] -= 1
 
     def check_win(self):
-        for ship_length in self.ships:
+        for ship_length in self.ships.values():
             if ship_length != 0:
                 return False
 
@@ -101,19 +98,34 @@ class BattleshipsGame:
                     print('\x1b[0;34;47m' + self.board[x][y] + '\x1b[0m', end='')
             print()
 
-    def play_game(self):
-        self.place_ships()
-        self.print_board()
-        has_won = False
+    def play_game(self, rounds=1, debug=False):
+        total_shots = {}
 
-        for i in range(self.BOARD_SIZE * self.BOARD_SIZE):
-            position_x, position_y = self.player.get_shot_position(self.ships)
-            hit = self.make_move(position_x, position_y)
-            self.player.hit_feedback(hit, self.ships)
+        for round_number in range(rounds):
+            self.place_ships()
 
-            if self.check_win():
-                has_won = True
-                break
+            if debug:
+                self.print_board()
 
-        self.print_board()
-        print('has_won: {}'.format(has_won))
+            shots = 0
+            max_shots = self.BOARD_SIZE ** 2
+
+            while shots < max_shots:
+                position_x, position_y = self.player.get_shot_position(self.ships)
+                hit = self.make_move(position_x, position_y)
+                self.player.hit_feedback(hit, self.ships)
+                shots += 1
+
+                if hit and self.check_win():
+                    break
+
+            total_shots.setdefault(shots, 0)
+            total_shots[shots] += 1
+
+            if debug:
+                self.print_board()
+
+            self.__init__(self.player)
+            self.player.__init__()
+
+        return total_shots
