@@ -1,10 +1,11 @@
 from . import BattleshipsGameSettings
+import copy
 import random
 
 class BattleshipsGame:
     def __init__(self, player):
-        self.BOARD_SIZE = BattleshipsGameSettings.BOARD_SIZE
-        self.ships = BattleshipsGameSettings.SHIPS
+        self.BOARD_SIZE = copy.deepcopy(BattleshipsGameSettings.BOARD_SIZE)
+        self.ships = copy.deepcopy(BattleshipsGameSettings.SHIPS)
         self.board = [['#' for y in range(self.BOARD_SIZE)] for x in range(self.BOARD_SIZE)]
         self.player = player
 
@@ -102,13 +103,13 @@ class BattleshipsGame:
         total_shots = {}
 
         for round_number in range(rounds):
+            shots = 0
+            max_shots = self.BOARD_SIZE ** 2
+
             self.place_ships()
 
             if debug:
                 self.print_board()
-
-            shots = 0
-            max_shots = self.BOARD_SIZE ** 2
 
             while shots < max_shots:
                 position_x, position_y = self.player.get_shot_position(self.ships)
@@ -119,13 +120,12 @@ class BattleshipsGame:
                 if hit and self.check_win():
                     break
 
-            total_shots.setdefault(shots, 0)
-            total_shots[shots] += 1
-
             if debug:
                 self.print_board()
 
+            total_shots.setdefault(shots, 0)
+            total_shots[shots] += 1
             self.__init__(self.player)
             self.player.__init__()
 
-        return total_shots
+        return sorted(total_shots.items())
