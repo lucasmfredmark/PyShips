@@ -14,11 +14,11 @@ def plotChart(plotting_data, title_param='Change me..'):
     # make the plot
     plt.plot(keys, values)
     plt.title(title_param)
-    
+    plt.xlim(xmin=0, xmax=100)
 
 
 # run the game with respective AI and plot the results:
 plotChart(BattleshipsGame(RandomShooter()).play_game(rounds=1000), "Random shooter")
-plotChart(BattleshipsGame(ParityShooter()).play_game(rounds=1000), "Hunting shooter")
+plotChart(BattleshipsGame(ParityShooter()).play_game(rounds=1000), "Parity shooter (only hunting)")
 
 plt.show()

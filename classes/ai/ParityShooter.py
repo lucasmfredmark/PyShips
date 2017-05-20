@@ -9,6 +9,8 @@ class ParityShooter(BattleshipsAI):
         self.shotArray = []
         self.lastX = 0
         self.lastY = 0
+        self.position_x = 0
+        self.position_y = 0
         
         self.directions = [0, 1, 2, 3]
         self.originalX = 0
@@ -17,31 +19,36 @@ class ParityShooter(BattleshipsAI):
         self.potential_targets = []
 
     def get_shot_position(self, ships):
-        
+        position_x = 0
+        position_y = 0
         # If there are potential targets, shoot at them first
         if len(self.potential_targets)!=0:
             while True:
-                # when we still have targets left
+                # while we still have targets left
                 if len(self.potential_targets)!=0:
-                    target = self.potential_targets.pop(0)
-                    if not self.shots[target[0]][target[1]]:
-                        self.lastX = target[0]
-                        self.lastY = target[1]
-                        self.shots[target[0]][target[1]] = True
-                        return target
-                # in case we run out of targets, go back to hunting
+                    target_position = self.potential_targets.pop(0)
+                    position_x = target_position[0]
+                    position_y = target_position[1]
+
+                    # check that we have not shot there before
+                    if not self.shots[position_x][position_y]:
+                        self.lastX = position_x
+                        self.lastY = position_y
+                        self.shots[position_x][position_y] = True
+                        return position_x, position_y
+                # ran out of targets, go back hunting
                 else:
                     break
-
-            #print("Target removed: " + str(target))
             
         # If there are no potential targets, hunt for ships
-        while True:
-            position_x = random.randint(0,9)
-            position_y = random.randint(0,9)
-            if not self.shots[position_x][position_y]:
-                 break
+        if len(self.potential_targets)==0:
+            while True:
+                position_x = random.randint(0,9)
+                position_y = random.randint(0,9)
+                if not self.shots[position_x][position_y]:
+                    break
 
+        # Mark the position as shoot at, and save last shot's position
         self.shots[position_x][position_y] = True
         self.lastX = position_x
         self.lastY = position_y

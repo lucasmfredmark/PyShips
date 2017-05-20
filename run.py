@@ -6,5 +6,5 @@ from classes.ai.ParityShooter import ParityShooter
 
 if __name__ == '__main__':
     game1 = BattleshipsGame(ParityShooter())
-    game1_shots = game1.play_game(rounds=1, debug=True)
+    game1_shots = game1.play_game(rounds=100, debug=False)
     print(game1_shots)
