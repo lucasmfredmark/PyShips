@@ -5,17 +5,10 @@ class ParityShooter(BattleshipsAI):
     def __init__(self):
         BattleshipsAI.__init__(self)
         self.shots = [[False for y in range(self.BOARD_SIZE)] for x in range(self.BOARD_SIZE)]
-        self.hunting = True
-        self.shotArray = []
         self.lastX = 0
         self.lastY = 0
         self.position_x = 0
         self.position_y = 0
-        
-        self.directions = [0, 1, 2, 3]
-        self.originalX = 0
-        self.originalY = 0
-
         self.potential_targets = []
 
     def get_shot_position(self, ships):
@@ -56,25 +49,29 @@ class ParityShooter(BattleshipsAI):
 
     
     def hit_feedback(self, is_hit, ships):
-
+        last_x = self.lastX
+        last_y = self.lastY
         if is_hit:
-            if validate_position(self, self.lastX - 1, self.lastY) and (self.lastX - 1, self.lastY) not in self.potential_targets:
-                self.potential_targets.append((self.lastX - 1, self.lastY))
-                print("Target added: " + str(self.lastX - 1),  str(self.lastY), "around " + str(self.lastX), str(self.lastY))
+            # target to the left
+            target_left = (last_x - 1, last_y)
+            if validate_position(self, target_left[0], target_left[1]) and target_left not in self.potential_targets:
+                self.potential_targets.append(target_left)
             
-            if validate_position(self, self.lastX + 1, self.lastY) and (self.lastX + 1, self.lastY) not in self.potential_targets:
-                self.potential_targets.append((self.lastX + 1, self.lastY))
-                print("Target added: " + str(self.lastX + 1), str(self.lastY), "around " + str(self.lastX), str(self.lastY))
+            # target to the right
+            target_right = (last_x + 1, last_y)
+            if validate_position(self, target_right[0], target_right[1]) and target_right not in self.potential_targets:
+                self.potential_targets.append(target_right)
             
-            if validate_position(self, self.lastX, self.lastY - 1) and (self.lastX, self.lastY - 1) not in self.potential_targets:
-                self.potential_targets.append((self.lastX, self.lastY - 1))
-                print("Target added: " + str(self.lastX), str(self.lastY - 1), "around " + str(self.lastX), str(self.lastY))
+            # target above
+            target_above = (last_x, last_y - 1)
+            if validate_position(self, target_above[0], target_above[1]) and target_above not in self.potential_targets:
+                self.potential_targets.append(target_above)
 
-            if validate_position(self, self.lastX, self.lastY + 1) and (self.lastX, self.lastY + 1) not in self.potential_targets:
-                self.potential_targets.append((self.lastX, self.lastY + 1))
-                print("Target added: " + str(self.lastX), str(self.lastY + 1), "around " + str(self.lastX), str(self.lastY))
+            #target below
+            target_below = (last_x, last_y + 1)
+            if validate_position(self, target_below[0], target_below[1]) and target_below not in self.potential_targets:
+                self.potential_targets.append(target_below)
             
-            print()
 
 def validate_position(self, position_x, position_y):
         return 0 <= position_x < self.BOARD_SIZE and 0 <= position_y < self.BOARD_SIZE
