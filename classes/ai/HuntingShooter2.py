@@ -1,7 +1,7 @@
 from .BattleshipsAI import BattleshipsAI
 import random
 
-class ParityShooter(BattleshipsAI):
+class HuntingShooter(BattleshipsAI):
     def __init__(self):
         BattleshipsAI.__init__(self)
         self.shots = [[False for y in range(self.BOARD_SIZE)] for x in range(self.BOARD_SIZE)]
@@ -39,8 +39,7 @@ class ParityShooter(BattleshipsAI):
                 position_x = random.randint(0,9)
                 position_y = random.randint(0,9)
                 if not self.shots[position_x][position_y]:
-                    if position_x%2==0 and position_y%2==0 or position_x%2==1 and position_y%2==1:
-                        break
+                    break
 
         # Mark the position as shoot at, and save last shot's position
         self.shots[position_x][position_y] = True
