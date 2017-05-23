@@ -15,10 +15,10 @@ class ParityShooter(BattleshipsAI):
         position_x = 0
         position_y = 0
         # If there are potential targets, shoot at them first
-        if len(self.potential_targets)!=0:
+        if len(self.potential_targets) != 0:
             while True:
                 # while we still have targets left
-                if len(self.potential_targets)!=0:
+                if len(self.potential_targets) != 0:
                     target_position = self.potential_targets.pop(0)
                     position_x = target_position[0]
                     position_y = target_position[1]
@@ -32,14 +32,14 @@ class ParityShooter(BattleshipsAI):
                 # ran out of targets, go back hunting
                 else:
                     break
-            
+
         # If there are no potential targets, hunt for ships
-        if len(self.potential_targets)==0:
+        if len(self.potential_targets) == 0:
             while True:
-                position_x = random.randint(0,9)
-                position_y = random.randint(0,9)
+                position_x = random.randint(0, self.BOARD_SIZE - 1)
+                position_y = random.randint(0, self.BOARD_SIZE - 1)
                 if not self.shots[position_x][position_y]:
-                    if position_x%2==0 and position_y%2==0 or position_x%2==1 and position_y%2==1:
+                    if position_x % 2 == 0 and position_y % 2 == 0 or position_x % 2 == 1 and position_y % 2 == 1:
                         break
 
         # Mark the position as shoot at, and save last shot's position
@@ -48,31 +48,29 @@ class ParityShooter(BattleshipsAI):
         self.lastY = position_y
         return position_x, position_y
 
-    
     def hit_feedback(self, is_hit, ships):
         last_x = self.lastX
         last_y = self.lastY
         if is_hit:
             # target to the left
             target_left = (last_x - 1, last_y)
-            if validate_position(self, target_left[0], target_left[1]) and target_left not in self.potential_targets:
+            if self.validate_position(target_left[0], target_left[1]) and target_left not in self.potential_targets:
                 self.potential_targets.append(target_left)
-            
+
             # target to the right
             target_right = (last_x + 1, last_y)
-            if validate_position(self, target_right[0], target_right[1]) and target_right not in self.potential_targets:
+            if self.validate_position(target_right[0], target_right[1]) and target_right not in self.potential_targets:
                 self.potential_targets.append(target_right)
-            
+
             # target above
             target_above = (last_x, last_y - 1)
-            if validate_position(self, target_above[0], target_above[1]) and target_above not in self.potential_targets:
+            if self.validate_position(target_above[0], target_above[1]) and target_above not in self.potential_targets:
                 self.potential_targets.append(target_above)
 
-            #target below
+            # target below
             target_below = (last_x, last_y + 1)
-            if validate_position(self, target_below[0], target_below[1]) and target_below not in self.potential_targets:
+            if self.validate_position(target_below[0], target_below[1]) and target_below not in self.potential_targets:
                 self.potential_targets.append(target_below)
-            
 
-def validate_position(self, position_x, position_y):
+    def validate_position(self, position_x, position_y):
         return 0 <= position_x < self.BOARD_SIZE and 0 <= position_y < self.BOARD_SIZE
