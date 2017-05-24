@@ -45,4 +45,15 @@ The x-axis shows the number of shots fired and the y-axis shows the number of ga
 In this strategy we are going to greatly improve the efficiency of our AI. 
 
 First the computer is in __Hunt__ mode, firing at random positions until it hits a ship. Once it finds out that the shot was a hit, it stacks the sorrounding squares (up, down, left and right) into a pool of targets.
+
 ![Sorrounding ships](/images/target_ships.jpg)
+
+As long as we have potential targets in this pool, we will keep firing at them. Once we run out, we get back to hunting mode.
+
+This strategy becomes much better, as we do not waste our shots at random positions, but instead we have a much higher chance of hitting the other parts of the ship once we found one.
+
+![Hunter Shooter](/images/hunter_shooter.png)
+
+Since we still rely a lot on random positions to find the ships in hunt mode, some games are only finished by firing all the shots.
+
+## Parity Shooter

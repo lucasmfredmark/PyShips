@@ -26,12 +26,12 @@ def plot_chart(plot_data, data_label):
 
 if __name__ == '__main__':
     game1_data = BattleshipsGame(RandomShooter()).play_game(rounds=number_of_rounds)
-    #game2_data = BattleshipsGame(HuntTargetShooter()).play_game(rounds=number_of_rounds)
+    game2_data = BattleshipsGame(HuntTargetShooter()).play_game(rounds=number_of_rounds)
     #game3_data = BattleshipsGame(ParityShooter()).play_game(rounds=number_of_rounds)
     #game4_data = BattleshipsGame(ProbabilityShooter()).play_game(rounds=number_of_rounds)
 
     plot_chart(game1_data, 'Random shooter')
-    #plot_chart(game2_data, 'Hunt/Target shooter')
+    plot_chart(game2_data, 'Hunt/Target shooter')
     #plot_chart(game3_data, 'Parity shooter')
     #plot_chart(game4_data, 'Probability shooter')
 
