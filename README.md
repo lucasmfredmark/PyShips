@@ -63,6 +63,9 @@ It is rather easy to improve the __Hunter Shooter__ even further. Since every sh
 
 The blue squares on the board are even while the white ones are odd parity. 
 
+## Probability Shooter
+The Probablity Shooter is the best way of winning in Battleships, as it will calculate the most likely place an enemy ship will be placed at 
+
 ![Parity board](/images/parity_board.png)
 
 With this strategy the game is always won before firing 80 shots, with an average of 65.
