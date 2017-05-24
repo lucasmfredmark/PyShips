@@ -110,18 +110,68 @@ When we enter the loop, we get a random location between 0 and 9 in the x and y 
 ## Hunter Shooter Walkthrough
 This shooter's strategy has been explained already, but just to remind you briefly, it's a two-mode strategy of either shooting randomly in order to get a hit(hunting mode) or shooting at the nearby positions of a hit(targeting mode). 
 The essential part of this shooter is remembering/storing the last hit position, which will, therefore, be the starting point of the targeting mode. In the code we have the variables "lastX" and "lastY":
-![Hunter Shooter Walkthrough](/images/huntingshooter1.jpg)
-![Hunter Shooter Walkthrough](/images/huntingshooter3.jpg)
+``` python
+class HuntTargetShooter(BattleshipsAI):
+    def __init__(self):
+        BattleshipsAI.__init__(self)
+        self.shots = [[False for y in range(self.BOARD_SIZE)] for x in range(self.BOARD_SIZE)]
+        self.lastX = 0 ##!
+        self.lastY = 0 ##!
+        self.position_x = 0
+        self.position_y = 0
+        self.potential_targets = []
+
+```
+And then saving the last known shot:
+``` python
+        self.shots[position_x][position_y] = True
+        self.lastX = position_x
+        self.lastY = position_y
+        return position_x, position_y
+```
 
 
-First, the "hunting" mode is based on the random shooter, so basically we hit random targets, until we have a successful hit, then we swtitch to the "targeting" mode:
-![Hunter Shooter Walkthrough](/images/huntingshooter2.jpg)
 
-Here you can see we have four cases for the directions (up, down, left, right). We add one to the integer of the axis we would like to go to : either X or Y, from the last known random hit.
+First, the "hunting" mode is based on the random shooter, so basically we hit random targets, until we have a successful hit, then we switch to the "targeting" mode:
+``` python
+def hit_feedback(self, is_hit, ships):
+        last_x = self.lastX
+        last_y = self.lastY
+        if is_hit:
+            # target to the left
+            target_left = (last_x - 1, last_y)
+            if self.validate_position(target_left[0], target_left[1]) and target_left not in self.potential_targets:
+                self.potential_targets.append(target_left)
+            
+            # target to the right
+            target_right = (last_x + 1, last_y)
+            if self.validate_position(target_right[0], target_right[1]) and target_right not in self.potential_targets:
+                self.potential_targets.append(target_right)
+            
+            # target above
+            target_above = (last_x, last_y - 1)
+            if self.validate_position(target_above[0], target_above[1]) and target_above not in self.potential_targets:
+                self.potential_targets.append(target_above)
+
+            # target below
+            target_below = (last_x, last_y + 1)
+            if self.validate_position(target_below[0], target_below[1]) and target_below not in self.potential_targets:
+                self.potential_targets.append(target_below)
+```
+
+Here you can see we have four cases for the directions (left, right, up and down). We add one to the integer of the axis we would like to go to : either X or Y, from the last known random hit.
 
 After we have no more available options for targeting, we go back to the "hunting" mode. 
 All in all, this is the repetitive cycle of the hunting shooter, which switches between those two modes until all the targets are destroyed.
 
 ## Parity Shooter Walkthrough
 The parity shooter is a simple mathematical upgrade to the hunter shooter. In a nutshell, it is based on the idea that each ship takes at least 2 squares, therefore, there is no need to put each position from 1 to 100 in a pool to randomize a shot. We take only half the positions as possibilities from which we randomize a shot. In the code, the parity shooter resembles the hunting shooter for the most part, except for the division of positions as available targets.
-![Parity Shooter Walkthrough](/images/parityshooter1.jpg)
+``` python
+if len(self.potential_targets) == 0:
+            while True:
+                position_x = random.randint(0, self.BOARD_SIZE - 1)
+                position_y = random.randint(0, self.BOARD_SIZE - 1)
+                if not self.shots[position_x][position_y]:
+                    if position_x % 2 == 0 and position_y % 2 == 0 or position_x % 2 == 1 and position_y % 2 == 1:
+                        break
+```
