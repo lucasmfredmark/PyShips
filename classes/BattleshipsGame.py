@@ -98,6 +98,7 @@ class BattleshipsGame:
                 else:
                     print('\x1b[0;34;47m' + self.board[x][y] + '\x1b[0m', end='')
             print()
+        print()
 
     def play_game(self, rounds=1, debug=False):
         total_shots = {}
