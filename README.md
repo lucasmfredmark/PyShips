@@ -79,3 +79,13 @@ This Image shows how the board looks to the Probablity AI in the beginning of a 
 This Image shows how it looks to the AI after a lot of shots have been fired. The dark grey areas are the high valued targets and the white ones have no value, as no ships can be there due to the size in both horizontal and vertical position. The colours in between are rated from light to dark, where darker is higher value of there being a ship. So it will always go after the darkest places first. This image will of course change for every shot, as it can rule out an area due to lack of space for the ships that are left.
 
 ![Probability Shooter](/images/Screenshot_3.jpg)
+
+
+## Code + Walkthrough
+In all our AI's, we start by calling BattleshipAI and self.shots.
+The "BattleshipAI" does..........
+The self.shots sets the whole board to false (When a location is set to true, then it means we have shot there)
+RandomShooter code:
+```python 
+GONNA DO STUFF HERE
+```
