@@ -83,9 +83,26 @@ This Image shows how it looks to the AI after a lot of shots have been fired. Th
 
 ## Code + Walkthrough
 In all our AI's, we start by calling BattleshipAI and self.shots.
-The "BattleshipAI" does..........
-The self.shots sets the whole board to false (When a location is set to true, then it means we have shot there)
+```python 
+    def __init__(self):
+        BattleshipsAI.__init__(self)
+        self.shots = [[False for y in range(self.BOARD_SIZE)] for x in range(self.BOARD_SIZE)]
+```
+The "BattleshipAI" calls for the creation of the board and the ships. It also gets the shooting positions and feedback, which is called after every shot
+
+The self.shots sets the whole board to false (When a location is set to true, it means the AI have shot there)
+
 RandomShooter code:
 ```python 
-GONNA DO STUFF HERE
+    def get_shot_position(self, ships):
+        while True:
+            position_x = random.randint(0, self.BOARD_SIZE - 1)
+            position_y = random.randint(0, self.BOARD_SIZE - 1)
+
+            if not self.shots[position_x][position_y]:
+                self.shots[position_x][position_y] = True
+                break
+
+        return position_x, position_y
 ```
+When we enter the loop, we get a random location between 0 and 9 in the x and y position. We then check if that loccation have already been shot at, if so we break and get a new position, otherwise we shoot at it. Which will keep on going until we have spend 100 shots or all the ships have been sunk 
