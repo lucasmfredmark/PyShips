@@ -70,12 +70,12 @@ With this strategy the game is always won before firing 80 shots, with an averag
 ![Parity Shooter](/images/parity_shooter.png)
 
 ## Probability Shooter
-The Probablity Shooter is the best way of winning in Battleships, as it will calculate the most likely place an enemy ship will be placed at.
+The Probablity Shooter is the best way of winning in Battleships, as it will calculate the most likely place an enemy ship will be placed at. It can do this, as it uses the knowledge of the board. Since the ships that are hit and sunk will be returned, then it knows what ships are still alive and can calculate where the best odds are of hitting one.
 
 This Image shows how the board looks to the Probablity AI in the beginning of a game
 
 ![Probability Shooter](/images/Screenshot_2.jpg)
 
-This Image shows how it looks to the AI after a lot of shots have been fired. The dark grey areas are the high valued targets and the white ones have no value, as no ships can be there due to the size.
+This Image shows how it looks to the AI after a lot of shots have been fired. The dark grey areas are the high valued targets and the white ones have no value, as no ships can be there due to the size in both horizontal and vertical position. The colours in between are rated from light to dark, where darker is higher value of there being a ship. So it will always go after the darkest places first. This image will of course change for every shot, as it can rule out an area due to lack of space for the ships that are left.
 
 ![Probability Shooter](/images/Screenshot_3.jpg)
