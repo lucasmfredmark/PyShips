@@ -115,14 +115,15 @@ class BattleshipsGame:
             while shots < max_shots:
                 position_x, position_y = self.player.get_shot_position(self.ships)
                 hit = self.make_move(position_x, position_y)
+
+                if debug:
+                    self.print_board()
+
                 self.player.hit_feedback(hit, self.ships)
                 shots += 1
 
                 if hit and self.check_win():
                     break
-
-            if debug:
-                self.print_board()
 
             total_shots.setdefault(shots, 0)
             total_shots[shots] += 1
