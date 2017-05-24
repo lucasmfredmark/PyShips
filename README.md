@@ -106,3 +106,22 @@ The self.shots sets the whole board to false (When a location is set to true, it
         return position_x, position_y
 ```
 When we enter the loop, we get a random location between 0 and 9 in the x and y position. We then check if that loccation have already been shot at, if so we break and get a new position, otherwise we shoot at it. Which will keep on going until we have spend 100 shots or all the ships have been sunk 
+
+## Hunter Shooter Walkthrough
+This shooter's strategy has been explained already, but just to remind you briefly, it's a two-mode strategy of either shooting randomly in order to get a hit(hunting mode) or shooting at the nearby positions of a hit(targeting mode). 
+The essential part of this shooter is remembering/storing the last hit position, which will, therefore, be the starting point of the targeting mode. In the code we have the variables "lastX" and "lastY":
+![Hunter Shooter Walkthrough](/images/huntingshooter1.jpg)
+![Hunter Shooter Walkthrough](/images/huntingshooter3.jpg)
+
+
+First, the "hunting" mode is based on the random shooter, so basically we hit random targets, until we have a successful hit, then we swtitch to the "targeting" mode:
+![Hunter Shooter Walkthrough](/images/huntingshooter2.jpg)
+
+Here you can see we have four cases for the directions (up, down, left, right). We add one to the integer of the axis we would like to go to : either X or Y, from the last known random hit.
+
+After we have no more available options for targeting, we go back to the "hunting" mode. 
+All in all, this is the repetitive cycle of the hunting shooter, which switches between those two modes until all the targets are destroyed.
+
+## Parity Shooter Walkthrough
+The parity shooter is a simple mathematical upgrade to the hunter shooter. In a nutshell, it is based on the idea that each ship takes at least 2 squares, therefore, there is no need to put each position from 1 to 100 in a pool to randomize a shot. We take only half the positions as possibilities from which we randomize a shot. In the code, the parity shooter resembles the hunting shooter for the most part, except for the division of positions as available targets.
+![Parity Shooter Walkthrough](/images/parityshooter1.jpg)
