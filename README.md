@@ -57,3 +57,12 @@ This strategy becomes much better, as we do not waste our shots at random positi
 Since we still rely a lot on random positions to find the ships in hunt mode, some games are only finished by firing all the shots.
 
 ## Parity Shooter
+It is rather easy to improve the __Hunter Shooter__ even further. Since every ship takes up at least to positions, we don't need to fire at each square. It is enough to target every second one, as shown with blue on the board below. 
+
+The blue squares on the board are even while the white ones are odd parity. 
+
+![Parity board](/images/parity_board.png)
+
+With this strategy the game is always won before firing 80 shots, with an average of 65.
+
+![Parity Shooter](/images/parity_shooter.png)
