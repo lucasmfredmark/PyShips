@@ -3,18 +3,20 @@
 1. Project description
 2. Game rules
 3. Description of the strategies
-4.  Code + walkthrough of code
+4. Code + walkthrough of code
 5. Results
 6. Conclusion
 
 # Battleships Project Description
+We have created a game that's meant for being analyzed. Therefore we can't have a real person playing, as it would take too long to get any usefull data. Therefore we have made various levels of AI's, that will "fight" against randomly placed ships on a board. Where the data then will be shown on a plot afterwards.
+
 ## Game rules
 The game is played on a 10 by 10 grid. One player places the five ships of varying sizes randomly and the other player shots at it. The ship lengts are 5, 4, 3, 3 and 2. This results in 17 targets out of 100. The game is over when all the ships have been sunk or 100 shots have been fired.
 
 ## Analysis strategy
-In order to analyse the efficiency of the different AIs, at the beginning of each round we place the ships randomly. Then we call the method `get_shot_position()` of the AI to shoot at. In the `hit_feedback()` method we tell the AI whether the shot was a hit or miss. It is also provided the remaining ships on board. This information is used to calculate later shot positions.
+In order to analyse the efficiency of the different AIs, at the beginning of each round we place the ships randomly. Then we call the method `get_shot_position()` of the AI to shoot at. In the `hit_feedback()` method we tell the AI whether the shot was a hit or miss. It also provides the remaining ships on the board. This information is used to calculate later shot positions.
 
-The AI is smarter the less shots it needs to fire to win a game.
+The smarter the AI is, the less shots it needs to win a game.
 
 When all the rounds are finished, we return a dictionary of the number of shots that were fired to win a game. We can use this data to plot a graph of the results.
 
