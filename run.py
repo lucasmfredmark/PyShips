@@ -21,6 +21,8 @@ def plot_chart(plot_data, data_label):
     plt.xlim(xmin=0, xmax=number_of_shots)
     plt.ylim(ymin=0)
     plt.xticks(range(0, number_of_shots + 1, 5))
+    plt.xlabel('Number of rounds')
+    plt.ylabel('Number of shots')
 
 if __name__ == '__main__':
     game1_data = BattleshipsGame(RandomShooter()).play_game(rounds=number_of_rounds)
