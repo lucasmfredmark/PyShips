@@ -81,7 +81,7 @@ This Image shows how it looks to the AI after a lot of shots have been fired. Th
 ![Probability Shooter](/images/Screenshot_3.jpg)
 
 
-## Code + Walkthrough
+# Code + Walkthrough
 In all our AI's, we start by calling BattleshipAI and self.shots.
 ```python 
     def __init__(self):
@@ -92,7 +92,7 @@ The "BattleshipAI" calls for the creation of the board and the ships. It also ge
 
 The self.shots sets the whole board to false (When a location is set to true, it means the AI have shot there)
 
-RandomShooter code:
+## RandomShooter code:
 ```python 
     def get_shot_position(self, ships):
         while True:
