@@ -1,11 +1,15 @@
 # PyShips
 
 1. Project description
-2. Game rules
-3. Description of the strategies
-4. Code + walkthrough of code
-5. Results
-6. Conclusion
+    * Game rules
+    * Analysis strategy
+2. AI strategies
+    * Random Shooter
+    * Hunt/Target Shooter
+    * Parity Shooter
+    * Probability Shooter
+3. Code + walkthrough of code
+4. Bibliography
 
 # Project description
 This project is about analyzing different shooting-strategies for the game Battleships. We have picked 3 strategies to implement, and the goal is to be able to compare them later on by showing the results in a graph.
@@ -178,3 +182,12 @@ if len(self.potential_targets) == 0:
             if position_x % 2 == 0 and position_y % 2 == 0 or position_x % 2 == 1 and position_y % 2 == 1:
                 break
 ```
+
+# Bibliography
+1. For the game logic we used the following article as a source of insipration: 
+[The game of battleships in python](http://code.activestate.com/recipes/578836-the-game-of-battleships-in-python/)
+
+2. The different AI strategies were modelled after the following tutorial. Some of the pictures are also taken from this link. [DataGenetics - Battleship](http://code.activestate.com/recipes/578836-the-game-of-battleships-in-python/)
+
+
+
